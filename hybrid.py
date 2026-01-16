@@ -37,7 +37,8 @@ class AudioVideo(Video, Audio):
 
 p = AudioVideo("Pyton asoslari", 8, "1080p","24" ,"wav" )
 
-print(p.get_content_info())
-print(p.get_play_audio())
-print(p.get_play_video())
-print(p.get_audio_video())
+# print(p.get_content_info())
+# print(p.get_play_audio())
+# print(p.get_play_video())
+# print(p.get_audio_video())
+print("salom")
