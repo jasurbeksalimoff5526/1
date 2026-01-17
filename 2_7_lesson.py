@@ -92,5 +92,5 @@ s1.add_book(b4)
 # d-delete
 
 
-print(s1.update_book('1984', price=65000, author=a3))
-# s1.get_books()
+# print(s1.update_book('1984', price=65000, author=a3))
+s1.get_books()
