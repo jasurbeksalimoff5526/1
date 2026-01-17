@@ -22,7 +22,7 @@ class Car:
         self.price = price_usd
 
     def car_info(self):
-        return f"model: {self.model}\nYoqilg'i turi: {self.car_type}\nMotor hajmi: {self.engine}\nMaksimal tezligi: {self.speed}\nNarxi: {self.price}"
+        return f"model: {self.model}\nYoqilg'i turi: {self.car_type}\nMotor hajmi: {self.engine}\nMaksimal tezligi: {self.speed}\nNarxi: {self.price}$"
 
 
 car1 = Car(bmw,"M3 GTR e46", "Oil", 5, 350, 65000 )
