@@ -73,39 +73,75 @@ t1 = Teacher(13, a1, 5)
 t2 = Teacher(14, a2, 17)
 t3 = Teacher(15, a3, 9)
 t4 = Teacher(16, a4, 8)
-t5 = Teacher(17, a5, 22)
-
 
 
 class Groups:
-    def __init__(self, group_name, teacher):
-        self.group_name = group_name
+    def __init__(self, group_id, teacher):
+        self.group_id = group_id
         self.teacher = teacher
         self.students = []
 
-    def get_info_group(self):
-        return f"Name: {self.group_name}, teacher: {self.teacher}, Student count: {len(self.students)}"
+    def get_group_info(self):
+        return f"Guruh nomi: {self.group_id}, O'qituvchi: {self.teacher.first_name} {self.teacher.last_name}, Talabalar soni: {len(self.students)}"
 
     def get_students(self):
         for i in self.students:
-            print(i.get_info_student())
+            print(i.get_student_info())
 
     def add_student(self, student):
         self.students.append(student)
-        return f'{student.name} qoshildi'
+        return f'{student.first_name} qoshildi'
+
+g1 = Groups('Matematika-1', t1)
+g2 = Groups('Tarix-4', t2)
+g3 = Groups('Fizika-7', t3)
+g4 = Groups('Xorijiy tillar-5', t4)
 
 
-class Speciality:
-    pass
+g1.add_student(s1)
+g1.add_student(s2)
+g1.add_student(s3)
+g2.add_student(s4)
+g2.add_student(s5)
+g2.add_student(s6)
+g3.add_student(s7)
+g3.add_student(s8)
+g3.add_student(s9)
+g4.add_student(s10)
+g4.add_student(s11)
+g4.add_student(s12)
+
 
 
 class Faculty:
-    pass
+    def __init__(self, faculty_name):
+        self.faculty_name = faculty_name
+        self.all_groups = []
+
+    def get_faculty_info(self):
+        return f"Fakultet nomi: {self.faculty_name}, guruhlar: {[i.group_id for i in self.all_groups]}, O'quvchilar soni:  "
+
+    def get_group_add(self, group):
+        self.all_groups.append(group)
 
 
-class StatusUniversity:
-    pass
+f1 = Faculty("Aniq fanlar")
+f2 = Faculty("Ijtimoiy fanlar")
+
+f1.get_group_add(g1)
+f1.get_group_add(g3)
+f2.get_group_add(g2)
+f2.get_group_add(g4)
 
 
-print(s1.get_student_info())
-print(t3.get_teacher_info())
+class University:
+    def __init__(self, university_name):
+        self.university_name = university_name
+        self.data = {}
+
+
+
+# print(f1.get_faculty_info())
+# print(f2.get_faculty_info())
+# print(g1.get_info_group())
+# print(t3.get_teacher_info())
