@@ -1,4 +1,17 @@
 import random
+import sys
+
+login = input("Login uchun ID kiriting (eslatma teacher ID 't' harfidan, student ID esa 's' harfidan boshlanadi): ")
+
+if login[0] == "t":
+    show_address = True
+elif login[0] == "s":
+    show_address = False
+else:
+    show_address = False
+    print("Login xato kiritildi")
+    sys.exit()
+
 
 class Address:
     def __init__(self):
@@ -34,39 +47,50 @@ p = Person()
 class Student:
     def __init__(self, persons, addresses):
         self.persons = persons
-        self.addresses = addresses
+        self.__addresses = addresses
         self.students_lst = []
 
     def get_student_generate(self, n):
         for i in range(n):
             p.get_person_generate(n)
             a.get_address_generate(n)
-            self.students_lst.append({"id": 's'+str(p.persons_lst[i]["id"]),"Ism familiya": f"{p.persons_lst[i]["ism"]} {p.persons_lst[i]["familiya"]}","yosh": p.persons_lst[i]["yosh"],"kurs": random.randint(1, 4),"manzil": a.address_lst[i]})
+            self.students_lst.append({"id": 's'+str(p.persons_lst[i]["id"]),
+                                      "Ism familiya": f"{p.persons_lst[i]["ism"]} {p.persons_lst[i]["familiya"]}",
+                                      "yosh": p.persons_lst[i]["yosh"],"kurs": random.randint(1, 4),
+                                      "manzil": a.address_lst[i]})
 
     def get_student_info(self, student):
-        return f"ID: {student['id']}, Ism familiya: {student['Ism familiya']}, Yosh: {student['yosh']}, Kurs: {student['kurs']}, Manzil: {student['manzil']}"
-
-
+        info = f"ID: {student['id']}, Ism familiya: {student['Ism familiya']}, Yosh: {student['yosh']}, Kurs: {student['kurs']}"
+        if show_address == True :
+            info += f", Manzil: {student['manzil']}"
+        return info
 
 s = Student(p.persons_lst, a.address_lst)
-s.get_student_generate(100)   # (n) nta student yaratildi
-# print(s.students_lst[89])
+s.get_student_generate(100)
 
 
 class Teacher:
     def __init__(self, persons, addresses):
         self.teacher_lst = []
+        self.persons = persons
+        self.addresses = addresses
 
     def get_geneerate_teacher(self, n):
         for i in range(n):
             p.get_person_generate(n)
             a.get_address_generate(n)
-            self.teacher_lst.append({"id": 't'+str(p.persons_lst[i]["id"]),"Ism familiya": f"{p.persons_lst[i]["ism"]} {p.persons_lst[i]["familiya"]}","yosh": p.persons_lst[i]["yosh"],"Malakasi": random.randint(1, 15),"manzil": a.address_lst[i]})
+            self.teacher_lst.append({"id": 't'+ str(p.persons_lst[i]["id"]),
+                                     "Ism familiya": f"{p.persons_lst[i]["ism"]} {p.persons_lst[i]["familiya"]}",
+                                     "yosh": p.persons_lst[i]["yosh"],"Malakasi": random.randint(1, 15),
+                                     "manzil": a.address_lst[i]})
 
+    def get_teacher_info(self, teacher):
+        return f"ID: {teacher['id']}, Ism familiya: {teacher['Ism familiya']}, \
+        Yosh: {teacher['yosh']}, Malaka: {teacher['Malakasi']}, \
+        Manzil: {teacher['manzil']}"
 
 t = Teacher(p.persons_lst, a.address_lst)
 t.get_geneerate_teacher(15)  #(n) n ta o'qituvchi yaratildi
-# print(t.teacher_lst[9])
 
 
 class Groups:
@@ -78,8 +102,7 @@ class Groups:
     def get_group_info(self):
         return f"Guruh: {self.group_id}\nO'qituvchi: {self.teacher['Ism familiya']}\nTalabalar soni: {len(self.students)}"
 
-
-    def get_students(self, student_obj):
+    def get_group_students(self, student_obj):
         for i in self.students:
             print( student_obj.get_student_info(i))
 
@@ -97,5 +120,92 @@ g2.add_students(s.students_lst[25:50])
 g3.add_students(s.students_lst[50:75])
 g4.add_students(s.students_lst[75:100])
 
-print(g4.get_group_info())
-# g2.get_students(s)
+
+class Faculty:
+    def __init__(self, faculty_name):
+        self.faculty_name = faculty_name
+        self.all_groups = []
+
+    def get_faculty_info(self):
+        return f"Fakultet nomi: {self.faculty_name}, \
+         guruhlar: {[i.group_id for i in self.all_groups]}, \
+         O'quvchilar soni: {sum(len(group.students) for group in self.all_groups)} "
+
+    def get_group_add(self, group):
+        self.all_groups.append(group)
+
+
+f1 = Faculty("Aniq fanlar")
+f2 = Faculty("Ijtimoiy fanlar")
+
+f1.get_group_add(g1)
+f1.get_group_add(g3)
+f2.get_group_add(g2)
+f2.get_group_add(g4)
+
+
+class University:
+    def __init__(self, university_name):
+        self.university_name = university_name
+        self.faculties = []   # Faculty obyektlari
+
+    def add_faculty(self, faculty):
+        self.faculties.append(faculty)
+
+    def get_university_info(self):
+        total_groups = sum(len(f.all_groups) for f in self.faculties)
+        total_students = sum(
+            len(group.students)
+            for f in self.faculties
+            for group in f.all_groups
+        )
+        total_teachers = len({
+            group.teacher["id"]
+            for f in self.faculties
+            for group in f.all_groups
+        })
+
+        return (
+            f"Universitet: {self.university_name}\n"
+            f"Fakultetlar soni: {len(self.faculties)}\n"
+            f"Guruhlar soni: {total_groups}\n"
+            f"O'quvchilar soni: {total_students}\n"
+            f"O'qituvchilar soni: {total_teachers}"
+        )
+
+    def get_all_faculties(self):
+        return [f.faculty_name for f in self.faculties]
+
+    def get_all_groups(self):
+        return [group.group_id for f in self.faculties for group in f.all_groups]
+
+    def get_all_students(self):
+        return [
+            student['Ism familiya']
+            for f in self.faculties
+            for group in f.all_groups
+            for student in group.students
+        ]
+
+    def get_all_teachers(self):
+        return list({
+            group.teacher["Ism familiya"]
+            for f in self.faculties
+            for group in f.all_groups
+        })
+
+u = University("Pedagogika")
+u.add_faculty(f1)
+u.add_faculty(f2)
+
+
+print(u.get_all_groups())
+# print(s.students_lst[89])
+# print(t.teacher_lst[9])
+# print(g4.get_group_info())
+# g2.get_group_students(s)
+# print(f1.get_faculty_info())
+# print(f2.get_faculty_info())
+# print(g1.get_group_info())
+
+
