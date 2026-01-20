@@ -199,7 +199,7 @@ u.add_faculty(f1)
 u.add_faculty(f2)
 
 
-print(u.get_all_groups())
+# print(u.get_all_groups())
 # print(s.students_lst[89])
 # print(t.teacher_lst[9])
 # print(g4.get_group_info())
