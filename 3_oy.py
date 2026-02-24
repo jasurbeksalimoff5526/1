@@ -66,5 +66,5 @@ add_data(NEWDB, 'users', column1, data1 )
 
 
 #1 SELECT * FROM books ORDER BY published_year;
-#2 SELECT * FROM books LEFT JOIN genres ON genres.id = books.genres_id;
-#3
+#2 SELECT genres_id, COUNT(*) FROM books LEFT JOIN genres ON genres.id = books.genres_id GROUP BY genres_id;
+#3 SELECT * FROM comments LEFT JOIN books ON comments.book_id = books.id WHERE content IS NULL;
