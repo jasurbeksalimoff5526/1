@@ -242,3 +242,44 @@ print(f"MAX: {max(natija1, natija2)}")
 
 #7
 
+'''
+nums = [1,2,3,4,5,6,7,8]
+a = len(nums)//2
+
+def kvadrat(k):
+    for i in k:
+        print(i**2)
+
+
+t1 = threading.Thread(target=kvadrat, args=(nums[:a],))
+t2 = threading.Thread(target=kvadrat, args=(nums[a:],))
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+'''
+
+#8
+
+'''
+def tub(a, b):
+    for i in range(a, b):
+        count = 0
+        for j in range(1, i+1):
+            if i % j == 0:
+                count += 1
+        if count == 2:
+            print(i)
+
+t1 = threading.Thread(target=tub, args=(1 , 51))
+t2 = threading.Thread(target=tub, args=(51, 101))
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+'''
+
