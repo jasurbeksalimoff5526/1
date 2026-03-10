@@ -283,3 +283,66 @@ t1.join()
 t2.join()
 '''
 
+#9
+
+'''
+lst = ["python","django","fastapi","backend"]
+def katta_str(data):
+    for i in data:
+        print(i.upper())
+
+t1 = threading.Thread(target=katta_str(lst[:2]))
+t2 = threading.Thread(target=katta_str(lst[2:]))
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+'''
+
+#10
+
+'''
+lst = ["level","python","radar","hello"]
+
+def palindrom(text):
+    for i in text:
+        if i == i[::-1]:
+            print("palindrom:", i)
+        else:
+            print("palindrom emas:", i)
+
+
+t1 = threading.Thread(target=palindrom(lst[:2]))
+t2 = threading.Thread(target=palindrom(lst[2:]))
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+'''
+
+
+#MULTIPROCESSING
+
+from multiprocessing import Pool
+
+#1
+
+def yigindi(a , b):
+    summ = 0
+    for i in range(a, b):
+        summ += i
+    print(summ)
+
+if __name__ == "__main__":
+    with Pool(processes=2) as pool:
+        natijalar = pool.map(yigindi, range(1, 100001))
+    print(natijalar)
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
