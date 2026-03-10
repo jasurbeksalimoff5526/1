@@ -326,23 +326,36 @@ t2.join()
 
 
 #MULTIPROCESSING
-
 from multiprocessing import Pool
 
 #1
 
-def yigindi(a , b):
-    summ = 0
-    for i in range(a, b):
-        summ += i
-    print(summ)
+'''
+def yigindi_range(args):
+    start, end = args
+    s = 0
+    for i in range(start, end):
+        s += i
+    return s
+
 
 if __name__ == "__main__":
-    with Pool(processes=2) as pool:
-        natijalar = pool.map(yigindi, range(1, 100001))
-    print(natijalar)
-t1.start()
-t2.start()
+    n = 1000000
+    p = 2               # processor soni
+    step = n // p       # datani protsessorlar soniga bo'lish
 
-t1.join()
-t2.join()
+    ranges = []
+    for i in range(p):
+        start = i * step
+        end = (i + 1) * step
+        ranges.append((start, end))
+
+    with Pool(processes=p) as pool:
+        natijalar = pool.map(yigindi_range, ranges)
+
+    total = sum(natijalar)
+    print(total)
+'''
+
+#2
+
